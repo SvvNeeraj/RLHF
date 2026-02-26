@@ -1,0 +1,49 @@
+# Python environment
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Local runtime artifacts
+*.db
+*.sqlite
+*.sqlite3
+*.log
+*.pid
+api.err.log
+api.out.log
+.api.pid
+.ui.pid
+
+# Model/vector artifacts (large)
+vector_store/
+data/vector_store/
+adapters/rlhf_lora_adapter/
+rlhf_lora_adapter.zip
+
+# Local training/output artifacts
+data/rlhf/*.jsonl
+data/rlhf/*.json
+
+# Large academic source folders (local only)
+AIML notes/
+CSE notes/
+Civil/
+Cyber Security/
+DS notess/
+ECE/
+EEE/
+IT/
+Mechanical/
+
+# Optional: prevent accidental large files
+*.pdf
+*.safetensors
+*.faiss
+*.pkl
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/

@@ -1,0 +1,5 @@
+﻿What is Big O notation?	Big O notation describes the upper bound of algorithm runtime growth as input size increases.
+Explain deadlock in Operating Systems.	Deadlock occurs when processes wait indefinitely for resources held by each other.
+State Ohm's Law.	Ohm's Law states that V = I * R, where voltage equals current times resistance.
+Differentiate stack and queue.	Stack is LIFO, queue is FIFO.
+What is normalization in DBMS?	Normalization organizes database tables to reduce redundancy and improve integrity.
