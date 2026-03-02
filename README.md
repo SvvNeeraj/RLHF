@@ -18,18 +18,39 @@ Hybrid academic tutor for B.Tech domains with unified PDF knowledge base, RAG + 
 
 ```mermaid
 flowchart TD
-    U[Streamlit UI] -->|POST /chat| API[FastAPI]
-    API --> RAG[GlobalRAG Retriever\nFAISS CPU + MiniLM]
-    RAG --> P[Hybrid Prompt Builder\nContext + LLM intelligence rules]
-    P --> LLM[Qwen2.5-1.5B / Phi-2\n4-bit + lazy load]
-    LLM --> RM[Response Modifier\nstructure + adaptive style]
-    RM --> API
-    U -->|POST /feedback| API
-    API --> RL[RL Engine\nfeedback_handler + reward_tracker + response_modifier]
-    RL --> DB[(SQLite)]
-    API --> IDX[Index Builder\n/rebuild-index]
-    IDX --> VS[(vector_store/global_index)]
-    API -->|GET /analytics /reward-history| U
+    UI[Streamlit UI]
+    API[FastAPI Backend]
+    DB[(SQLite)]
+    VS[(FAISS Global Index)]
+    DOC[data/ PDFs]
+
+    UI -->|POST /auth/login, /auth/register| API
+    API --> AUTH[Token + Role Validation]
+    AUTH --> DB
+
+    UI -->|User Role: POST /chat| API
+    API --> GUARD[Guardrails + Query Intent Parser]
+    GUARD --> RET[Hybrid Retrieval\nSemantic + Lexical + Domain Boost]
+    RET --> VS
+    DOC --> IDX[Index Builder /rebuild-index]
+    IDX --> VS
+
+    RET --> PROMPT[Prompt Builder\nRequested Sections + RLHF Constraints]
+    PROMPT --> LLM[Qwen Local Runtime\n4-bit attempt + CPU fallback]
+    LLM --> QC[Quality Gate + Response Modifier]
+    QC --> API
+    API -->|chat_id, response, sources| UI
+    API --> DB
+
+    UI -->|User Role: POST /feedback| API
+    API --> REWARD[Reward Model + Feedback Handler + Reward Tracker]
+    REWARD --> DB
+    REWARD --> ONLINE[Online RLHF State\nquery_key/user_key adaptation]
+    ONLINE --> PROMPT
+
+    UI -->|Admin Role: GET /analytics /reward-history /users /documents| API
+    API --> DB
+    API --> VS
 ```
 
 ## Core Pipeline
