@@ -38,12 +38,12 @@ flowchart TD
     AUTH --> DB
 
     UI -->|User Role: POST /chat| API
-    API --> GRD[Guardrails + Intent Parsing]
-    GRD --> RET[Hybrid Retrieval\nSemantic + Lexical + Domain Boost]
+    API --> GRD[Guardrails and Intent Parsing]
+    GRD --> RET[Hybrid Retrieval<br/>Semantic + Lexical + Domain Boost]
     RET --> VS
-    RET --> PROMPT[Prompt Builder\nRequested Sections + RLHF Constraints]
-    PROMPT --> LLM[Qwen Local Runtime\n4-bit attempt, CPU-safe fallback]
-    LLM --> POST[Quality Gate + Response Modifier]
+    RET --> PROMPT[Prompt Builder<br/>Requested Sections + RLHF Constraints]
+    PROMPT --> LLM[Qwen Local Runtime<br/>4-bit attempt and CPU-safe fallback]
+    LLM --> POST[Quality Gate and Response Modifier]
     POST --> API
     API --> DB
     API --> UI
@@ -51,7 +51,7 @@ flowchart TD
     UI -->|User Role: POST /feedback| API
     API --> FB[Reward Model + Feedback Handler + Reward Tracker]
     FB --> DB
-    FB --> OLRL[Online RLHF State\n(user_id + query_key)]
+    FB --> OLRL[Online RLHF State<br/>user_id and query_key]
     OLRL --> PROMPT
 
     DOC --> IDX[Index Builder /rebuild-index]
